@@ -4,23 +4,9 @@
 #import ../types, ../utils, ../formatters, ../prefs
 #
 #proc getTitle(tweet: Tweet; retweet: string): string =
-#if tweet.pinned: result = "Pinned: "
-#elif retweet.len > 0: result = &"RT by @{retweet}: "
-#elif tweet.reply.len > 0: result = &"R to @{tweet.reply[0]}: "
-#end if
-#var text = stripHtml(tweet.text)
-##if unicode.runeLen(text) > 32:
-##  text = unicode.runeSubStr(text, 0, 32) & "..."
-##end if
-#result &= xmltree.escape(text)
-#if result.len > 0: return
-#end if
-#if tweet.photos.len > 0:
-#  result &= "Image"
-#elif tweet.video.isSome:
-#  result &= "Video"
-#elif tweet.gif.isSome:
-#  result &= "Gif"
+#result = &"{tweet.user.fullname} (@{tweet.user.username})"
+#if retweet.len > 0: result &= &" RT by @{retweet}"
+#elif tweet.reply.len > 0: result &= &" R to @{tweet.reply[0]}"
 #end if
 #end proc
 #
